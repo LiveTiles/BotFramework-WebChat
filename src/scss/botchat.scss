@@ -4,10 +4,8 @@
 $actionsHeight: 40px;
 $consoleHeight: 50px;
 
-$headerPaddingBottom: 0;
-$headerPaddingLeft: 8px;
-$headerPaddingRight: 8px;
-$headerPaddingTop: 8px;
+$headerPaddingLeft: 10px;
+$headerPaddingRight: 10px;
 $headerTotalHeight: 60px;
 
 $actionTransition: .2s cubic-bezier(0,0,.5,1);
@@ -15,7 +13,7 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
 /* reset */
 
     body .wc-app, .wc-app button, .wc-app input, .wc-app textarea {
-        font-family: 'Segoe UI', sans-serif;
+        font-family: "Helvetica Neue", arial, sans-serif;
         font-size: 15px;
     }
 
@@ -50,10 +48,10 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
         box-sizing: content-box;
         color: $c01;
         font-weight: 500;
-        height: $headerTotalHeight - $headerPaddingTop - $headerPaddingBottom;
+        height: $headerTotalHeight;
+        line-height: $headerTotalHeight;
         left: 0;
-        letter-spacing: 0.5px;
-        padding: $headerPaddingTop $headerPaddingRight $headerPaddingBottom $headerPaddingLeft;
+        padding: 0 $headerPaddingRight 0 $headerPaddingLeft;
         position: absolute;
         right: 0;
         top: 0;
@@ -172,13 +170,15 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
     }
 
     .wc-console {
-        border: 5px solid $c_chrome;
+        // border: 5px solid $c_chrome;
         bottom: 0;
         box-sizing: border-box;
         height: $consoleHeight;
         left: 0;
         position: absolute;
         right: 0;
+        border-top: 1px solid #ccc;
+        background-color: #f7f7f7;
     }
 
 /* views */
@@ -594,13 +594,48 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
         margin: 11px;
     }
 
+    .wc-console .wc-send-btn {
+        background-color: #00be9c;
+        color: white;
+        height: 30px;
+        line-height: 30px;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 0 10px 0 30px;
+        border-radius: 3px;
+        font-size: 13px;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:active {
+            transform: scale(0.975);
+        }
+
+        svg {
+            width: 20px;
+            height: 30px;
+            position: absolute;
+            top: 0;
+            left: 5px;
+            margin: 0 !important;
+
+            path {
+                fill: #ffffff;
+            }
+        }
+    }
+
     .wc-console textarea, .wc-console input[type=text] {
         border: none;
         height: 100%;
         outline: none;
         padding: 0;
+        padding-left: 10px;
         resize: none;
         width: 100%;
+        background-color: transparent;
     }
 
     .wc-send svg {
@@ -619,7 +654,7 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
 
     .wc-textbox {
         bottom: 0;
-        left: 48px;
+        left: 0;
         right: 49px;
     }
 
