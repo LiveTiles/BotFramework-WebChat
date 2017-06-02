@@ -286,6 +286,7 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
             min-height: 32px;
             width: 100%;
             padding: 0 16px;
+            border-radius: 16px;
         }
 
         button:hover {
@@ -335,7 +336,8 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
             list-style-type: none;
             text-align: center;
             float: left;
-            margin: 2px;
+            margin: 2px 0;
+            width: 100%;
         }
 
         &.hero img {
