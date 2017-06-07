@@ -36,28 +36,26 @@
             var params = BotChat.queryParams(location.search);
 
             var user = {
-                id: params['userid'] || 'userid',
-                name: params["username"] || 'username'
+                id: 'userid',
+                name: 'username'
                 };
             
-            var bot = {
-                id: params['botid'] || 'botid',
-                name: params["botname"] || 'botname'
-            };
+            //var bot = {
+            //    id: params['botid'] || 'botid',
+            //    name: params["botname"] || 'botname'
+            //};
             
             window['botchatDebug'] = params['debug'] && params['debug'] === "true";
 
             BotChat.App({
                 directLine: {
-                    secret: params['s'],
-                    token: params['t'],
-                    domain: params['domain'],
-                    webSocket: params['webSocket'] && params['webSocket'] === "true" // defaults to true
+                    secret: "y9tsrXsx-2s.cwA.4Dc.pVj86UtysVKBnhOsrK26gzLW2LuNkZp6Rr7SxEsXBoc"
+                },
+                bot: {
+                    id: "bbbd2410-2556-486c-96a1-557ac00ca41d"
                 },
                 user: user,
-                bot: bot,
-                locale: params['locale'],
-                resize: 'window'
+                resize: 'detect'
                 // sendTyping: true,    // defaults to false. set to true to send 'typing' activities to bot (and other users) when user is typing
             }, document.getElementById("BotChatGoesHere"));
         </script>
