@@ -13,6 +13,7 @@ interface Props {
 
     sendMessage: (inputText: string) => void,
     sendFiles: (files: FileList) => void,
+    leaveIntroMode: () => void
 }
 
 class ShellContainer extends React.Component<Props, {}> {
@@ -24,6 +25,7 @@ class ShellContainer extends React.Component<Props, {}> {
     }
 
     private sendMessage() {
+        this.props.leaveIntroMode();
         if (this.props.inputText.trim().length > 0)
             this.props.sendMessage(this.props.inputText);
     }
@@ -95,7 +97,8 @@ export const Shell = connect(
         // only used to create helper functions below 
         sendMessage,
         sendFiles
-    }, (stateProps: any, dispatchProps: any, ownProps: any): Props => ({
+    }, (stateProps: any, dispatchProps: any, ownProps: any): Props => { 
+        return {
         // from stateProps
         inputText: stateProps.inputText,
         strings: stateProps.strings,
@@ -103,6 +106,7 @@ export const Shell = connect(
         onChangeText: dispatchProps.onChangeText,
         // helper functions
         sendMessage: (text: string) => dispatchProps.sendMessage(text, stateProps.user, stateProps.locale),
-        sendFiles: (files: FileList) => dispatchProps.sendFiles(files, stateProps.user, stateProps.locale)
-    })
+        sendFiles: (files: FileList) => dispatchProps.sendFiles(files, stateProps.user, stateProps.locale),
+        leaveIntroMode: ownProps.leaveIntroMode
+ }}
 )(ShellContainer);

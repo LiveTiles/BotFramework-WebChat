@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 
 export interface FormatOptions {
     showHeader?: boolean
+    introMode?: boolean
 }
 
 export type ActivityOrID = {
@@ -48,6 +49,7 @@ export const sendFiles = (files: FileList, from: User, locale: string) => ({
         from,
         locale
     }} as ChatActions);
+
 
 import { History } from './History';
 import { MessagePane } from './MessagePane';
@@ -105,6 +107,15 @@ export class Chat extends React.Component<ChatProps, {}> {
         });
     }
 
+    leaveIntroMode() {
+        this.scrollToBottom();
+        this.store.dispatch<ChatActions>({
+            type: 'Set_Format_Options',
+            options: { showHeader: true, introMode: false}
+        });
+        this.forceUpdate();
+    }
+
     componentDidMount() {
         // Now that we're mounted, we know our dimensions. Put them in the store (this will force a re-render)
         this.setSize();
@@ -136,6 +147,7 @@ export class Chat extends React.Component<ChatProps, {}> {
                 });
             });
         }
+
     }
 
     componentWillUnmount() {
@@ -159,6 +171,15 @@ export class Chat extends React.Component<ChatProps, {}> {
         (this.chatviewPanel.querySelector(".wc-shellinput") as HTMLInputElement).focus();
     }
 
+    private scrollToBottom() {
+        // HUGE HACK - set focus back to input after clicking on an action
+        // React makes this hard to do well, so we just do an end run around them
+        var scrollContainer = this.chatviewPanel.querySelector(".wc-message-groups") as HTMLInputElement;
+       var element = scrollContainer.scrollBy(0,2000);
+    //    console.log('element!', scrollContainer);
+
+    }
+
     render() {
         const state = this.store.getState();
         konsole.log("BotChat.Chat state", state);
@@ -166,7 +187,7 @@ export class Chat extends React.Component<ChatProps, {}> {
         // only render real stuff after we know our dimensions
         let header: JSX.Element;
         if (state.format.options.showHeader) header =
-            <div className="wc-header">
+            <div className="wc-header" onClick={ this.leaveIntroMode.bind(this) }>
                 <span>{ state.format.strings.title }</span>
             </div>;
 
@@ -174,14 +195,20 @@ export class Chat extends React.Component<ChatProps, {}> {
         if (this.props.resize === 'detect') resize =
             <ResizeDetector onresize={ this.resizeListener } />;
 
+        var rootClassName = "wc-chatview-panel";
+
+        if (state.format.options.introMode) {
+            rootClassName += " intro-mode";
+        }
+
         return (
             <Provider store={ this.store }>
-                <div className="wc-chatview-panel" ref={ div => this.chatviewPanel = div }>
+                <div className={rootClassName} ref={ div => this.chatviewPanel = div }>
                     { header }
                     <MessagePane setFocus={ () => this.setFocus() }>
                         <History setFocus={ () => this.setFocus() }/>
                     </MessagePane>
-                    <Shell />
+                    <Shell leaveIntroMode={ this.leaveIntroMode.bind(this) } />
                     { resize }
                 </div>
             </Provider>

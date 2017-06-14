@@ -76,7 +76,8 @@ export const format: Reducer<FormatState> = (
     state: FormatState = {
         locale: 'en-us',
         options: {
-            showHeader: true
+            showHeader: true,
+            introMode: true
         },
         strings: defaultStrings,
         carouselMargin: undefined
