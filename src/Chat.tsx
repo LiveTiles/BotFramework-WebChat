@@ -116,6 +116,18 @@ export class Chat extends React.Component<ChatProps, {}> {
         this.forceUpdate();
     }
 
+    updateConversation(botConn: IBotConnection) {
+        // ideally this should be of type "conversationUpdate"
+        console.log('sending $CMD INITIALIZE');
+        botConn.postActivity({
+            type: "message",
+            text: "$CMD initialize",
+            from: this.props.user
+        })
+    }
+
+
+
     componentDidMount() {
         // Now that we're mounted, we know our dimensions. Put them in the store (this will force a re-render)
         this.setSize();
@@ -124,6 +136,11 @@ export class Chat extends React.Component<ChatProps, {}> {
             ? (this.botConnection = new DirectLine(this.props.directLine))
             : this.props.botConnection
             ;
+        
+
+
+
+        this.updateConversation(botConnection);
 
         if (this.props.resize === 'window')
             window.addEventListener('resize', this.resizeListener);
@@ -197,9 +214,9 @@ export class Chat extends React.Component<ChatProps, {}> {
 
         var rootClassName = "wc-chatview-panel";
 
-        if (state.format.options.introMode) {
-            rootClassName += " intro-mode";
-        }
+        // if (state.format.options.introMode) {
+        //     rootClassName += " intro-mode";
+        // }
 
         return (
             <Provider store={ this.store }>
