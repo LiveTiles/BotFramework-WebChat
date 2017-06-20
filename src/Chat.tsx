@@ -116,18 +116,6 @@ export class Chat extends React.Component<ChatProps, {}> {
         this.forceUpdate();
     }
 
-    updateConversation(botConn: IBotConnection) {
-        // ideally this should be of type "conversationUpdate"
-        console.log('sending $CMD INITIALIZE');
-        botConn.postActivity({
-            type: "message",
-            text: "$CMD initialize",
-            from: this.props.user
-        })
-    }
-
-
-
     componentDidMount() {
         // Now that we're mounted, we know our dimensions. Put them in the store (this will force a re-render)
         this.setSize();
@@ -152,10 +140,7 @@ export class Chat extends React.Component<ChatProps, {}> {
             activity => this.handleIncomingActivity(activity),
             error => konsole.log("activity$ error", error)
         );
-
-        this.updateConversation(botConnection);
-
-        
+       
 
         if (this.props.selectedActivity) {
             this.selectedActivitySubscription = this.props.selectedActivity.subscribe(activityOrID => {
