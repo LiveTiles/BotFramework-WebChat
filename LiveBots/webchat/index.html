@@ -14,12 +14,21 @@
         </style>
         <link href="../prod-core/botchat.css" rel="stylesheet" />
         <link href="../prod-core/botchat-fullwindow.css" rel="stylesheet" />
+
+        <!-- Brand Color -->
+        <script>
+            var brandColor = "#00be9c";
+        </script>
+        <script src="../prod-core/colorOverride.js"></script>
+        <script>colorOverride()</script>
+
+        <!-- Custom Styling -->
         <link href="./bot.css" rel="stylesheet" />
     </head>
 
     <body onload="initialize()">
         <div id="BotChatGoesHere"></div>
-        <script src="../prod-core/environment.js"></script>
+        <script src="../prod-core/environment.js"></script>        
         <script src="../prod-core/botchat.js"></script>
         <script src="../prod-core/bot.js"></script>
     </body>
