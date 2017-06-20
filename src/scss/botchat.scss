@@ -59,6 +59,27 @@ $actionTransition: .2s cubic-bezier(0,0,.5,1);
         transition: all 0.4s;
     }
 
+    .wc-app {
+        overflow: hidden;
+    }
+
+    .wc-app .wc-chatview-panel .custom-logo {
+        top: -240px;
+        position: relative;
+        height: auto;
+        /* left: 50%; */
+        width: 150px;
+        left: 50%;
+        margin-left: -75px;
+        z-index: 12;
+        display: inline-block;
+        transition: all 0.4s;
+    }
+
+    .wc-app .wc-chatview-panel.intro-mode .custom-logo {
+        top: 120px;
+    }
+
     .wc-time {
         color: $c_textLight;
         margin-bottom: 10px;

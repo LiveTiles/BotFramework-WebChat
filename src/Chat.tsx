@@ -136,11 +136,8 @@ export class Chat extends React.Component<ChatProps, {}> {
             ? (this.botConnection = new DirectLine(this.props.directLine))
             : this.props.botConnection
             ;
-        
 
 
-
-        this.updateConversation(botConnection);
 
         if (this.props.resize === 'window')
             window.addEventListener('resize', this.resizeListener);
@@ -155,6 +152,10 @@ export class Chat extends React.Component<ChatProps, {}> {
             activity => this.handleIncomingActivity(activity),
             error => konsole.log("activity$ error", error)
         );
+
+        this.updateConversation(botConnection);
+
+        
 
         if (this.props.selectedActivity) {
             this.selectedActivitySubscription = this.props.selectedActivity.subscribe(activityOrID => {
@@ -192,8 +193,7 @@ export class Chat extends React.Component<ChatProps, {}> {
         // HUGE HACK - set focus back to input after clicking on an action
         // React makes this hard to do well, so we just do an end run around them
         var scrollContainer = this.chatviewPanel.querySelector(".wc-message-groups") as HTMLInputElement;
-       var element = scrollContainer.scrollBy(0,2000);
-    //    console.log('element!', scrollContainer);
+        scrollContainer.scrollTop = scrollContainer.scrollTop + 2000;
 
     }
 
@@ -214,14 +214,15 @@ export class Chat extends React.Component<ChatProps, {}> {
 
         var rootClassName = "wc-chatview-panel";
 
-        // if (state.format.options.introMode) {
-        //     rootClassName += " intro-mode";
-        // }
+        if (state.format.options.introMode) {
+            rootClassName += " intro-mode";
+        }
 
         return (
             <Provider store={ this.store }>
                 <div className={rootClassName} ref={ div => this.chatviewPanel = div }>
                     { header }
+                    <img src="logo.png" className="custom-logo" />
                     <MessagePane setFocus={ () => this.setFocus() }>
                         <History setFocus={ () => this.setFocus() }/>
                     </MessagePane>
