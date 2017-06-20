@@ -1,16 +1,10 @@
 {
   "ExpandedNodes": [
     "",
-    "\\LiveBots",
-    "\\LiveBots\\prod-core",
     "\\LiveBots\\test-core",
     "\\LiveBots\\webchat",
-    "\\samples\\backchannel",
-    "\\samples\\fullwindow",
-    "\\samples\\sidebar",
     "\\src\\scss",
     "\\src\\scss\\includes"
   ],
-  "SelectedNode": "\\LiveBots\\webchat\\bot.css",
   "PreviewInSolutionExplorer": false
 }

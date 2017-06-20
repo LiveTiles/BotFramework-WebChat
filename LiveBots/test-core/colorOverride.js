@@ -8,7 +8,7 @@ const colorOverride = () => {
         ".wc-card button:active {background-color: " + brandColor + "; border-color: " + brandColor + "; } " +
         ".wc-console .wc-send-btn {background-color: " + brandColor + "; } " +
         ".wc-console.has-text .wc-send svg {fill: " + brandColor + "; } " +
-        ".wc-message-from-me.wc-message-content {background-color: " + brandColor + "; } " +
+        ".wc-message-from-me .wc-message-content {background-color: " + brandColor + "; } " +
         ".wc-message-from-me svg.wc-message-callout path {fill: " + brandColor + "; } ";
 
     if (style.styleSheet) {
