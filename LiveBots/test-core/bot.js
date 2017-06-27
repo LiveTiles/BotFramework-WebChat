@@ -1,51 +1,40 @@
-var params = BotChat.queryParams(location.search);
+//var params = BotChat.queryParams(location.search);
+//window['botchatDebug'] = params['debug'] && params['debug'] === "true";
 
-window['botchatDebug'] = params['debug'] && params['debug'] === "true";
+var userId = document.cookie;
+if (userId == "") {
+    userId = Math.random().toString(36).substring(7);
+    document.cookie = userId;
+}
 
-// Do not hard-code user Id, channel user Id updated once logged in.
 var user = {
-    id: params['userid'] || 'userid',
-    name: params["username"] || 'username'
+    id: userId,
+    name: "You"
 };
 
 var bot = {
     id: environment.botId,
-    name: params["botname"] || 'botname'
+    name: "Bot"
 };
 
 var botConnection = new BotChat.DirectLine({
     secret: environment.directLineSecret,
+    user: user,
     //token: params['t'],
     //domain: params['domain'],
-    webSocket: params['webSocket'] && params['webSocket'] === "true" // defaults to true
+    //webSocket: true // defaults to true
 });
 
+console.log("Trigger conversation update");
+botConnection
+    .postActivity({ type: "ConversationUpdate", from: user })
+    .subscribe(id => console.log("Conversation updated"));
+
+console.log("Intialize BotChat App");
 BotChat.App({
     botConnection: botConnection,
     bot: bot,
     user: user,
     resize: 'detect'
-    // sendTyping: true,    // defaults to false. set to true to send 'typing' activities to bot (and other users) when user is typing
+    // sendTyping: true // defaults to false. set to true to send 'typing' activities to bot (and other users) when user is typing
 }, document.getElementById("BotChatGoesHere"));
-
-const initialize = () => {
-    console.log("Trigger conversation update on load");
-
-    botConnection
-        .postActivity({ type: "ConversationUpdate", value: "", from: { id: user.id }, name: "" })
-        .subscribe(id => console.log("Conversation updated"));
-}
-
-//botConnection.activity$
-//    .filter(activity => activity.type === "event" && activity.name === "changeBackground")
-//    .subscribe(activity => changeBackgroundColor(activity.value))
-
-//const changeBackgroundColor = (newColor) => {
-//    document.body.style.backgroundColor = newColor;
-//}
-
-//const postButtonMessage = () => {
-//    botConnection
-//        .postActivity({ type: "event", value: "", from: { id: user.id }, name: "buttonClicked" })
-//        .subscribe(id => console.log("success"));
-//}
