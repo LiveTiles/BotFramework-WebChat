@@ -1,10 +1,10 @@
 //var params = BotChat.queryParams(location.search);
 //window['botchatDebug'] = params['debug'] && params['debug'] === "true";
 
-var userId = document.cookie;
-if (userId == "") {
-    userId = Math.random().toString(36).substring(7);
-    document.cookie = userId;
+var userId = localStorage.getItem("userId");
+if (userId == null) {
+    userId = "dl_" + Math.random().toString(36).substring(7);
+    localStorage.setItem("userId", userId);
 }
 
 var user = {
@@ -18,19 +18,19 @@ var bot = {
 };
 
 var botConnection = new BotChat.DirectLine({
-    secret: environment.directLineSecret,
-    user: user,
+    secret: environment.directLineSecret
     //token: params['t'],
     //domain: params['domain'],
     //webSocket: true // defaults to true
 });
 
 console.log("Trigger conversation update");
+//HACK: ConversationUpdate type does not have access to the user bot data, use event instead
 botConnection
-    .postActivity({ type: "ConversationUpdate", from: user })
+    .postActivity({ type: "event", from: user, name: "ConversationUpdate", value: "" })
     .subscribe(id => console.log("Conversation updated"));
 
-console.log("Intialize BotChat App");
+console.log("Initialize BotChat App");
 BotChat.App({
     botConnection: botConnection,
     bot: bot,
