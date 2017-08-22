@@ -19,3 +19,6 @@ built
 botchat.js
 botchat.js.map
 *.css
+.vs
+/.vs
+.vs/*

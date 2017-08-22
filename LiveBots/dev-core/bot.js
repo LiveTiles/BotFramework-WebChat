@@ -24,6 +24,22 @@ var botConnection = new BotChat.DirectLine({
     //webSocket: true // defaults to true
 });
 
+// Subscribe to backchannel Config, the bot will post the config when settings has been loaded or changed
+botConnection.activity$
+    .filter(activity => activity.type === "event" && activity.name === "Config")
+    .subscribe(activity => loadBotConfig(activity.value))
+
+//console.log("Trigger get bot config");
+//botConnection
+//    .postActivity({ type: "event", from: user, name: "Config", value: "" })
+//    .subscribe(id => console.log("Config request posted"));
+
+const loadBotConfig = (jConfig) => {
+    var config = JSON.parse(jConfig);
+    brandColor = config.BotColor;
+    //TODO: Set bot logo
+}
+
 console.log("Trigger conversation update");
 //HACK: ConversationUpdate type does not have access to the user bot data, use event instead
 botConnection
