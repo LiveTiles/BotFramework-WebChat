@@ -40,11 +40,17 @@ const loadBotConfig = (jConfig) => {
     //TODO: Set bot logo
 }
 
-console.log("Trigger conversation update");
-//HACK: ConversationUpdate type does not have access to the user bot data, use event instead
+console.log("Initialize the bot and trigger a conversation update");
 botConnection
-    .postActivity({ type: "event", from: user, name: "ConversationUpdate", value: "" })
-    .subscribe(id => console.log("Conversation updated"));
+    .postActivity({
+        type: "event", from: user, name: "Initialize", value: JSON.stringify(
+            {
+                "botId": "", // If null the default bot is used
+                "draft": false, // If true, the published version is used 
+                "authToken": "" // If null, the bot will request the user to login
+            })
+    })
+    .subscribe(id => console.log("Bot initialized"));
 
 console.log("Initialize BotChat App");
 BotChat.App({
